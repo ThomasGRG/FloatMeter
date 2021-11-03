@@ -8,6 +8,7 @@ namespace FloatMeter
 {
     public partial class Form1 : Form
     {
+        bool menuOpen = false;
         bool mouseDown;
         Point lastLocation;
 
@@ -153,7 +154,10 @@ namespace FloatMeter
 
         private void Form1_MouseLeave(object sender, EventArgs e)
         {
-            Size = new Size(622, 1);
+            if (!menuOpen)
+            {
+                Size = new Size(622, 1);
+            }
         }
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -280,8 +284,11 @@ namespace FloatMeter
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            mouseDown = true;
-            lastLocation = e.Location;
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseDown = true;
+                lastLocation = e.Location;
+            }
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -295,9 +302,12 @@ namespace FloatMeter
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            mouseDown = false;
-            Properties.Settings.Default.Position = Location;
-            Properties.Settings.Default.Save();
+            if (mouseDown)
+            {
+                mouseDown = false;
+                Properties.Settings.Default.Position = Location;
+                Properties.Settings.Default.Save();
+            }
         }
 
         private void exitMenu_Click(object sender, EventArgs e)
@@ -361,7 +371,17 @@ namespace FloatMeter
 
         private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            menuOpen = true;
             InitNetworkMenu();
+        }
+
+        private void contextMenuStrip1_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            menuOpen = false;
+            if (!this.ClientRectangle.Contains(PointToClient(Cursor.Position)))
+            {
+                Size = new Size(622, 1);
+            }
         }
     }
 }
