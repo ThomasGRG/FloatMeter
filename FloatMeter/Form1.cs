@@ -405,6 +405,10 @@ namespace FloatMeter
         private void contextMenuStrip1_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
             menuOpen = false;
+            if (!this.ClientRectangle.Contains(PointToClient(Cursor.Position)) && shrink)
+            {
+                Size = new Size(622, 1);
+            }
         }
 
         private void shrinkMenu_Click(object sender, EventArgs e)
