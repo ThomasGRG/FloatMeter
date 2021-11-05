@@ -43,6 +43,8 @@ namespace FloatMeter
         string sentUnit;
         string receiveUnit;
 
+        string pos = "None";
+
         public Form1()
         {
             InitializeComponent();
@@ -325,21 +327,38 @@ namespace FloatMeter
 
         private void tlPos_Click(object sender, EventArgs e)
         {
-            this.Location = new Point(0,0);
-            Properties.Settings.Default.Position = Location;
-            Properties.Settings.Default.Save();
+            pos = "Left";
+            setLoc();
         }
 
         private void tcPos_Click(object sender, EventArgs e)
         {
-            this.Location = new Point((Screen.PrimaryScreen.Bounds.Width/2) - (622/2), 0);
-            Properties.Settings.Default.Position = Location;
-            Properties.Settings.Default.Save();
+            pos = "Center";
+            setLoc();
         }
 
         private void trPos_Click(object sender, EventArgs e)
         {
-            this.Location = new Point(Screen.PrimaryScreen.Bounds.Width - 622, 0);
+            pos = "Right";
+            setLoc();
+        }
+
+        private void setLoc()
+        {
+            contextMenuStrip1.Close();
+            if (pos == "Left")
+            {
+                this.Location = new Point(0, 0);
+            }
+            else if (pos == "Center")
+            {
+                this.Location = new Point((Screen.PrimaryScreen.Bounds.Width / 2) - (622 / 2), 0);
+            }
+            else if (pos == "Right")
+            {
+                this.Location = new Point(Screen.PrimaryScreen.Bounds.Width - 622, 0);
+            }
+            pos = "None";
             Properties.Settings.Default.Position = Location;
             Properties.Settings.Default.Save();
         }
@@ -386,10 +405,6 @@ namespace FloatMeter
         private void contextMenuStrip1_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
             menuOpen = false;
-            if (!this.ClientRectangle.Contains(PointToClient(Cursor.Position)))
-            {
-                Size = new Size(622, 1);
-            }
         }
 
         private void shrinkMenu_Click(object sender, EventArgs e)
