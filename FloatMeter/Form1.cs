@@ -8,6 +8,7 @@ namespace FloatMeter
 {
     public partial class Form1 : Form
     {
+        bool shrink = false;
         bool menuOpen = false;
         bool mouseDown;
         Point lastLocation;
@@ -126,7 +127,11 @@ namespace FloatMeter
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Size = new Size(622, 1);
+            if (Properties.Settings.Default.AutoShrink)
+            {
+                shrink = true;
+                Size = new Size(622, 1);
+            }
             Location = Properties.Settings.Default.Position;
             if (Properties.Settings.Default.TopMost)
             {
@@ -149,12 +154,15 @@ namespace FloatMeter
 
         private void Form1_MouseEnter(object sender, EventArgs e)
         {
-            Size = new Size(622, 34);
+            if (shrink)
+            {
+                Size = new Size(622, 34);
+            }
         }
 
         private void Form1_MouseLeave(object sender, EventArgs e)
         {
-            if (!menuOpen)
+            if (!menuOpen && shrink)
             {
                 Size = new Size(622, 1);
             }
@@ -381,6 +389,29 @@ namespace FloatMeter
             if (!this.ClientRectangle.Contains(PointToClient(Cursor.Position)))
             {
                 Size = new Size(622, 1);
+            }
+        }
+
+        private void shrinkMenu_Click(object sender, EventArgs e)
+        {
+            if (shrinkMenu.Checked)
+            {
+                shrink = true;
+                Properties.Settings.Default.AutoShrink = true;
+            }
+            else
+            {
+                shrink = false;
+                Properties.Settings.Default.AutoShrink = false;
+            }
+            Properties.Settings.Default.Save();
+        }
+
+        private void contextMenuStrip1_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+        {
+            if (e.CloseReason == ToolStripDropDownCloseReason.ItemClicked)
+            {
+                e.Cancel = true;
             }
         }
     }

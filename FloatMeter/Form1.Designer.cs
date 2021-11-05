@@ -50,6 +50,7 @@ namespace FloatMeter
             this.netComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.shrinkMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -153,14 +154,16 @@ namespace FloatMeter
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.positionMenu,
+            this.shrinkMenu,
             this.bootMenu,
             this.topmostMenu,
             this.netComboBox,
             this.toolStripSeparator1,
             this.exitMenu});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(185, 177);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(185, 209);
             this.contextMenuStrip1.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStrip1_Closed);
+            this.contextMenuStrip1.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.contextMenuStrip1_Closing);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // positionMenu
@@ -228,6 +231,14 @@ namespace FloatMeter
             this.exitMenu.Text = "Exit";
             this.exitMenu.Click += new System.EventHandler(this.exitMenu_Click);
             // 
+            // shrinkMenu
+            // 
+            this.shrinkMenu.CheckOnClick = true;
+            this.shrinkMenu.Name = "shrinkMenu";
+            this.shrinkMenu.Size = new System.Drawing.Size(184, 32);
+            this.shrinkMenu.Text = "Auto-Shrink";
+            this.shrinkMenu.Click += new System.EventHandler(this.shrinkMenu_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -283,6 +294,7 @@ namespace FloatMeter
         private System.Windows.Forms.ToolStripMenuItem topmostMenu;
         private System.Windows.Forms.ToolStripMenuItem bootMenu;
         private System.Windows.Forms.ToolStripComboBox netComboBox;
+        private System.Windows.Forms.ToolStripMenuItem shrinkMenu;
     }
 }
 
