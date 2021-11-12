@@ -132,6 +132,7 @@ namespace FloatMeter
             if (Properties.Settings.Default.AutoShrink)
             {
                 shrink = true;
+                shrinkMenu.Checked = true;
                 Size = new Size(622, 1);
             }
             Location = Properties.Settings.Default.Position;
